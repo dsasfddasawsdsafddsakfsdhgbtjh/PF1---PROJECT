@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Charlotte Folk | Login</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="auth-container">
+    <div class="auth-card">
+        <div class="auth-header">
+            <img src="image/charlotte-logo.svg" class="auth-logo" alt="Charlotte Folk">
+            <h2>Sign in to your account</h2>
+            <p class="muted">Enter your credentials to continue</p>
+        </div>
+
+        <form id="loginForm" class="auth-form">
+            <label class="form-group">
+                <span class="label">Username</span>
+                <input type="text" id="username" name="username" placeholder="Your username" required>
+                <div class="input-error" id="usernameError"></div>
+            </label>
+
+            <label class="form-group">
+                <span class="label">Password</span>
+                <input type="password" id="password" name="password" placeholder="••••••••" required>
+                <div class="input-error" id="passwordError"></div>
+            </label>
+
+            <div class="form-row">
+                <label class="checkbox">
+                    <input type="checkbox" id="remember"> Remember me
+                </label>
+                <a href="#" class="small-link">Forgot?</a>
+            </div>
+
+            <button class="btn btn-primary" type="submit">Sign In</button>
+
+            <p class="auth-footer">Don't have an account? <a href="register.html">Create one</a></p>
+        </form>
+    </div>
+</div>
+
+    <script src="js/validate-auth.js"></script>
+    <script src="js/login.js"></script>
+
+</body>
+</html>

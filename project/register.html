@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Charlotte Folk | Register</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="auth-container">
+    <div class="auth-card">
+        <div class="auth-header">
+            <img src="image/charlotte-logo.svg" class="auth-logo" alt="Charlotte Folk">
+            <h2>Create an account</h2>
+            <p class="muted">Start your Charlotte Folk experience</p>
+        </div>
+
+        <form id="registerForm" class="auth-form">
+            <label class="form-group">
+                <span class="label">Username</span>
+                <input type="text" id="newUsername" name="username" placeholder="Choose a username" required>
+                <div class="input-error" id="newUsernameError"></div>
+            </label>
+
+            <label class="form-group">
+                <span class="label">Email</span>
+                <input type="email" id="email" name="email" placeholder="you@example.com" required>
+                <div class="input-error" id="emailError"></div>
+            </label>
+
+            <label class="form-group">
+                <span class="label">Password</span>
+                <input type="password" id="newPassword" name="password" placeholder="Create a password" required>
+                <div class="input-error" id="newPasswordError"></div>
+            </label>
+
+            <button class="btn btn-primary" type="submit">Create account</button>
+
+            <p class="auth-footer">Already have an account? <a href="login.html">Sign in</a></p>
+        </form>
+    </div>
+
+</div>
+
+    <script src="js/validate-auth.js"></script>
+    <script src="js/register.js"></script>
+
+</body>
+</html>

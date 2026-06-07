@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Charlotte Folk | Cart</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header>
+    <nav class="navbar">
+        <div class="logo">CHARLOTTE FOLK</div>
+
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="cart.html">Cart</a></li>
+        </ul>
+
+        <button id="menuBtn">☰</button>
+    </nav>
+</header>
+
+<section class="cart-page">
+    <div class="cart-page-grid">
+        <main class="cart-main">
+            <div class="cart-header">
+                <div class="cart-logo">
+                    <span class="cart-icon">🛍</span>
+                    <div>
+                        <p class="brand-label">Charlotte Folk</p>
+                        <h2>Your Shopping Bag</h2>
+                    </div>
+                </div>
+                <p class="cart-description">A curated selection of your latest pieces. Review your items before checkout.</p>
+            </div>
+
+            <div class="cart-items" id="cartContainer"></div>
+        </main>
+
+        <aside class="cart-sidebar">
+            <div class="summary-card">
+                <p class="summary-label">Order Summary</p>
+                <h3 id="totalPrice">Total: ₱0</h3>
+                <a href="checkout.html" class="btn sidebar-btn">Proceed to Checkout</a>
+                <button id="clearCartBtn" class="sidebar-clear">Clear Cart</button>
+            </div>
+        </aside>
+    </div>
+</section>
+
+<script src="js/cart.js"></script>
+ 
+</body>
+</html>

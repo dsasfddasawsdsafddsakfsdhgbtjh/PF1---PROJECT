@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Charlotte Folk | Admin Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<section class="featured">
+
+    <h2>Admin Dashboard</h2>
+
+    <input
+        type="text"
+        id="productName"
+        placeholder="Product Name"
+    >
+
+    <br><br>
+
+    <input
+        type="number"
+        id="productPrice"
+        placeholder="Price"
+    >
+
+    <br><br>
+
+    <input
+        type="text"
+        id="productCategory"
+        placeholder="Category"
+    >
+
+    <br><br>
+
+    <input
+        type="text"
+        id="productImage"
+        placeholder="Image URL"
+    >
+
+    <br><br>
+
+    <button onclick="addProduct()">
+        Add Product
+    </button>
+
+    <hr>
+
+    <div id="adminProducts"></div>
+
+</section>
+
+<script src="js/admin.js"></script>
+
+</body>
+</html>

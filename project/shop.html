@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Charlotte Folk | Shop</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header>
+    <nav class="navbar">
+        <div class="logo">CHARLOTTE FOLK</div>
+
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="wishlist.html">Wishlist</a></li>
+            <li><a href="cart.html">Cart</a></li>
+        </ul>
+
+        <button id="menuBtn">☰</button>
+    </nav>
+</header>
+
+<section class="featured">
+    <h2>All Products</h2>
+    <div class="filter-buttons">
+
+    <button onclick="filterProducts('all')">
+        All
+    </button>
+
+    <button onclick="filterProducts('shirt')">
+        Shirts
+    </button>
+
+    <button onclick="filterProducts('hoodie')">
+        Hoodies
+    </button>
+
+    <button onclick="filterProducts('pants')">
+        Pants
+    </button>
+
+</div>
+<input
+    type="text"
+    id="searchInput"
+    placeholder="Search products..."
+>
+    <div id="productContainer" class="product-grid">
+
+    </div>
+</section>
+
+<script src="js/products.js"></script>
+<script src="js/shop.js"></script>
+ 
+</body>
+</html>
