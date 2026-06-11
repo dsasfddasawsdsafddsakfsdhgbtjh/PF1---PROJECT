@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Charlotte Folk</title>
+    <link rel="icon" type="image/png" href="https://cdn.shopify.com/s/files/1/0527/5805/3051/files/cf_logoo_5d0317aa-f546-437b-9f7d-655c0c2769c0.png?crop=center&height=32&v=1723628464&width=32">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            color: #151515;
+            background: #fff;
+            font-family: "Roboto Condensed", Arial, sans-serif;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .site-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            min-height: 74px;
+            padding: 18px clamp(18px, 4vw, 48px);
+            border-bottom: 1px solid #e2e2e2;
+        }
+
+        .logo {
+            font-family: Helvetica, Arial, sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: 0;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+            font-size: 13px;
+            text-transform: uppercase;
+        }
+
+        .login-page {
+            display: grid;
+            place-items: center;
+            min-height: calc(100vh - 74px);
+            padding: 40px 18px;
+        }
+
+        .login-panel {
+            width: min(100%, 430px);
+        }
+
+        .login-panel h1 {
+            margin: 0 0 10px;
+            font-family: Helvetica, Arial, sans-serif;
+            font-size: clamp(28px, 5vw, 42px);
+            line-height: 1;
+            letter-spacing: 0;
+            text-transform: uppercase;
+        }
+
+        .login-panel p {
+            margin: 0 0 28px;
+            color: #555;
+            font-size: 15px;
+            line-height: 1.5;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        input {
+            width: 100%;
+            min-height: 48px;
+            padding: 12px 14px;
+            color: #151515;
+            border: 1px solid #dedede;
+            border-radius: 0;
+            background: #fff;
+            font: inherit;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #151515;
+        }
+
+        .password-row {
+            position: relative;
+        }
+
+        .toggle-password {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            min-width: 54px;
+            min-height: 32px;
+            padding: 0 8px;
+            border: 0;
+            background: transparent;
+            color: #151515;
+            cursor: pointer;
+            font: inherit;
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+
+        .password-row input {
+            padding-right: 72px;
+        }
+
+        .form-options {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            margin: 8px 0 24px;
+            font-size: 13px;
+        }
+
+        .remember {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .remember input {
+            width: 16px;
+            min-height: 16px;
+            accent-color: #151515;
+        }
+
+        .login-button {
+            width: 100%;
+            min-height: 50px;
+            border: 1px solid #151515;
+            border-radius: 0;
+            background: #151515;
+            color: #fff;
+            cursor: pointer;
+            font: inherit;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .login-button:hover {
+            background: #333;
+        }
+
+        .message {
+            display: none;
+            margin-top: 16px;
+            padding: 12px 14px;
+            border: 1px solid #dedede;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .message.is-error {
+            display: block;
+            border-color: #a52222;
+            color: #a52222;
+        }
+
+        .message.is-success {
+            display: block;
+            border-color: #247a3a;
+            color: #247a3a;
+        }
+
+        .signup-text {
+            margin-top: 24px;
+            color: #555;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .signup-text a,
+        .form-options a {
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+        @media (max-width: 640px) {
+            .site-header {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .nav-links {
+                width: 100%;
+                justify-content: space-between;
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <a class="logo" href="index.html">Charlotte Folk</a>
+        <nav class="nav-links" aria-label="Main navigation">
+            <a href="index.html">Home</a>
+            <a href="collections.html">Collections</a>
+            <a href="search.html">Search</a>
+        </nav>
+    </header>
+
+    <main class="login-page">
+        <section class="login-panel" aria-labelledby="login-title">
+            <h1 id="login-title">Log in</h1>
+            <p>Access your Charlotte Folk clone account using your registered email and password.</p>
+
+            <form id="loginForm" novalidate>
+                <div class="form-group">
+                    <label for="email">Email address</label>
+                    <input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="password-row">
+                        <input id="password" name="password" type="password" autocomplete="current-password" placeholder="Enter password" required>
+                        <button class="toggle-password" type="button" id="togglePassword">Show</button>
+                    </div>
+                </div>
+
+                <div class="form-options">
+                    <label class="remember" for="remember">
+                        <input id="remember" name="remember" type="checkbox">
+                        Remember me
+                    </label>
+                    <a href="#" id="forgotPassword">Forgot password?</a>
+                </div>
+
+                <button class="login-button" type="submit">Log in</button>
+                <div class="message" id="loginMessage" role="status" aria-live="polite"></div>
+            </form>
+
+            <div class="signup-text">
+                New customer? <a href="register.html">Create account</a>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const demoUser = {
+            email: "customer@charlottefolk.com",
+            password: "charlotte123"
+        };
+
+        const loginForm = document.getElementById("loginForm");
+        const emailInput = document.getElementById("email");
+        const passwordInput = document.getElementById("password");
+        const rememberInput = document.getElementById("remember");
+        const loginMessage = document.getElementById("loginMessage");
+        const togglePassword = document.getElementById("togglePassword");
+        const forgotPassword = document.getElementById("forgotPassword");
+
+        function showMessage(text, type) {
+            loginMessage.textContent = text;
+            loginMessage.className = "message is-" + type;
+        }
+
+        function isValidEmail(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+
+        function getRegisteredUsers() {
+            return JSON.parse(localStorage.getItem("cfRegisteredUsers")) || [];
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+
+            const email = emailInput.value.trim().toLowerCase();
+            const password = passwordInput.value.trim();
+
+            if (!email || !password) {
+                showMessage("Please enter your email and password.", "error");
+                return;
+            }
+
+            if (!isValidEmail(email)) {
+                showMessage("Please enter a valid email address.", "error");
+                return;
+            }
+
+            const registeredUsers = getRegisteredUsers();
+            const registeredUser = registeredUsers.find(function (user) {
+                return user.email === email && user.password === password;
+            });
+
+            if ((email === demoUser.email && password === demoUser.password) || registeredUser) {
+                const storage = rememberInput.checked ? localStorage : sessionStorage;
+                storage.setItem("cfLoggedInUser", email);
+                showMessage("Login successful. Redirecting to the homepage...", "success");
+
+                setTimeout(function () {
+                    window.location.href = "index.html";
+                }, 900);
+                return;
+            }
+
+            showMessage("Invalid login. Try your registered account or customer@charlottefolk.com and charlotte123.", "error");
+        }
+
+        togglePassword.addEventListener("click", function () {
+            const isPassword = passwordInput.type === "password";
+            passwordInput.type = isPassword ? "text" : "password";
+            togglePassword.textContent = isPassword ? "Hide" : "Show";
+        });
+
+        forgotPassword.addEventListener("click", function (event) {
+            event.preventDefault();
+            showMessage("Password reset is not connected in this static clone.", "error");
+        });
+
+        loginForm.addEventListener("submit", handleLogin);
+    </script>
+</body>
+</html>
