@@ -1,0 +1,125 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    color: #151515;
+    background: #fff;
+    font-family: "Roboto Condensed", Arial, sans-serif;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.site-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    min-height: 74px;
+    padding: 18px clamp(18px, 4vw, 48px);
+    border-bottom: 1px solid #e2e2e2;
+}
+
+.logo {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    font-size: 13px;
+    text-transform: uppercase;
+}
+
+.support-page {
+    display: grid;
+    grid-template-columns: 250px minmax(0, 760px);
+    gap: 48px;
+    width: min(1120px, calc(100% - 36px));
+    margin: 0 auto;
+    padding: 48px 0 72px;
+}
+
+.support-nav {
+    display: grid;
+    align-content: start;
+    gap: 2px;
+    border-top: 1px solid #e2e2e2;
+}
+
+.support-nav a {
+    padding: 14px 0;
+    border-bottom: 1px solid #e2e2e2;
+    color: #555;
+    font-size: 13px;
+    text-transform: uppercase;
+}
+
+.support-nav a.active,
+.support-nav a:hover {
+    color: #151515;
+}
+
+.support-content h1 {
+    margin: 0 0 18px;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: clamp(30px, 5vw, 46px);
+    line-height: 1;
+    text-transform: uppercase;
+}
+
+.support-content > p {
+    margin: 0 0 28px;
+    color: #555;
+    line-height: 1.55;
+}
+
+.info-list {
+    display: grid;
+    gap: 18px;
+}
+
+.info-list article {
+    border-top: 1px solid #e2e2e2;
+    padding-top: 18px;
+}
+
+.info-list h2 {
+    margin: 0 0 8px;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 18px;
+    text-transform: uppercase;
+}
+
+.info-list p {
+    margin: 0;
+    color: #555;
+    line-height: 1.55;
+}
+
+@media (max-width: 760px) {
+    .site-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .nav-links {
+        width: 100%;
+        justify-content: space-between;
+        gap: 12px;
+    }
+
+    .support-page {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+}

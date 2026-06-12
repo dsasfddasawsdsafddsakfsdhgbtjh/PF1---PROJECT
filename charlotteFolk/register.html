@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account | Charlotte Folk</title>
+    <link rel="icon" type="image/png" href="https://cdn.shopify.com/s/files/1/0527/5805/3051/files/cf_logoo_5d0317aa-f546-437b-9f7d-655c0c2769c0.png?crop=center&height=32&v=1723628464&width=32">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            color: #151515;
+            background: #fff;
+            font-family: "Roboto Condensed", Arial, sans-serif;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .site-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            min-height: 74px;
+            padding: 18px clamp(18px, 4vw, 48px);
+            border-bottom: 1px solid #e2e2e2;
+        }
+
+        .logo {
+            font-family: Helvetica, Arial, sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: 0;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+            font-size: 13px;
+            text-transform: uppercase;
+        }
+
+        .register-page {
+            display: grid;
+            place-items: center;
+            min-height: calc(100vh - 74px);
+            padding: 40px 18px;
+        }
+
+        .register-panel {
+            width: min(100%, 430px);
+        }
+
+        .register-panel h1 {
+            margin: 0 0 10px;
+            font-family: Helvetica, Arial, sans-serif;
+            font-size: clamp(28px, 5vw, 42px);
+            line-height: 1;
+            letter-spacing: 0;
+            text-transform: uppercase;
+        }
+
+        .register-panel p {
+            margin: 0 0 28px;
+            color: #555;
+            font-size: 15px;
+            line-height: 1.5;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        input {
+            width: 100%;
+            min-height: 48px;
+            padding: 12px 14px;
+            color: #151515;
+            border: 1px solid #dedede;
+            border-radius: 0;
+            background: #fff;
+            font: inherit;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #151515;
+        }
+
+        .register-button {
+            width: 100%;
+            min-height: 50px;
+            border: 1px solid #151515;
+            border-radius: 0;
+            background: #151515;
+            color: #fff;
+            cursor: pointer;
+            font: inherit;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .register-button:hover {
+            background: #333;
+        }
+
+        .message {
+            display: none;
+            margin-top: 16px;
+            padding: 12px 14px;
+            border: 1px solid #dedede;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .message.is-error {
+            display: block;
+            border-color: #a52222;
+            color: #a52222;
+        }
+
+        .message.is-success {
+            display: block;
+            border-color: #247a3a;
+            color: #247a3a;
+        }
+
+        .login-text {
+            margin-top: 24px;
+            color: #555;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .login-text a {
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+        @media (max-width: 640px) {
+            .site-header {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .nav-links {
+                width: 100%;
+                justify-content: space-between;
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <a class="logo" href="index.html">Charlotte Folk</a>
+        <nav class="nav-links" aria-label="Main navigation">
+            <a href="index.html">Home</a>
+            <a href="collections.html">Collections</a>
+            <a href="search.html">Search</a>
+        </nav>
+    </header>
+
+    <main class="register-page">
+        <section class="register-panel" aria-labelledby="register-title">
+            <h1 id="register-title">Create account</h1>
+            <p>Register a local demo account for this Charlotte Folk clone.</p>
+
+            <form id="registerForm" novalidate>
+                <div class="form-group">
+                    <label for="fullName">Full name</label>
+                    <input id="fullName" name="fullName" type="text" autocomplete="name" placeholder="Your name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email address</label>
+                    <input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input id="password" name="password" type="password" autocomplete="new-password" placeholder="At least 6 characters" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm password</label>
+                    <input id="confirmPassword" name="confirmPassword" type="password" autocomplete="new-password" placeholder="Repeat password" required>
+                </div>
+
+                <button class="register-button" type="submit">Create account</button>
+                <div class="message" id="registerMessage" role="status" aria-live="polite"></div>
+            </form>
+
+            <div class="login-text">
+                Already have an account? <a href="login.html">Log in</a>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const registerForm = document.getElementById("registerForm");
+        const fullNameInput = document.getElementById("fullName");
+        const emailInput = document.getElementById("email");
+        const passwordInput = document.getElementById("password");
+        const confirmPasswordInput = document.getElementById("confirmPassword");
+        const registerMessage = document.getElementById("registerMessage");
+
+        function showMessage(text, type) {
+            registerMessage.textContent = text;
+            registerMessage.className = "message is-" + type;
+        }
+
+        function isValidEmail(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+
+        function getRegisteredUsers() {
+            return JSON.parse(localStorage.getItem("cfRegisteredUsers")) || [];
+        }
+
+        function saveRegisteredUsers(users) {
+            localStorage.setItem("cfRegisteredUsers", JSON.stringify(users));
+        }
+
+        function handleRegister(event) {
+            event.preventDefault();
+
+            const fullName = fullNameInput.value.trim();
+            const email = emailInput.value.trim().toLowerCase();
+            const password = passwordInput.value.trim();
+            const confirmPassword = confirmPasswordInput.value.trim();
+
+            if (!fullName || !email || !password || !confirmPassword) {
+                showMessage("Please complete all fields.", "error");
+                return;
+            }
+
+            if (!isValidEmail(email)) {
+                showMessage("Please enter a valid email address.", "error");
+                return;
+            }
+
+            if (password.length < 6) {
+                showMessage("Password must be at least 6 characters.", "error");
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                showMessage("Passwords do not match.", "error");
+                return;
+            }
+
+            const users = getRegisteredUsers();
+            const emailExists = users.some(function (user) {
+                return user.email === email;
+            });
+
+            if (emailExists) {
+                showMessage("An account with this email already exists.", "error");
+                return;
+            }
+
+            users.push({
+                fullName: fullName,
+                email: email,
+                password: password
+            });
+
+            saveRegisteredUsers(users);
+            localStorage.setItem("cfLoggedInUser", email);
+            showMessage("Account created. Redirecting to the homepage...", "success");
+
+            setTimeout(function () {
+                window.location.href = "index.html";
+            }, 900);
+        }
+
+        registerForm.addEventListener("submit", handleRegister);
+    </script>
+</body>
+</html>
