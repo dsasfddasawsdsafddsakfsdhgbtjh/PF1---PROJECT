@@ -56,8 +56,54 @@
             padding: 40px 18px;
         }
 
+        .login-shell {
+            width: min(100%, 980px);
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 18px;
+            align-items: stretch;
+        }
+
         .login-panel {
-            width: min(100%, 430px);
+            width: 100%;
+            background: #fff;
+            border: 1px solid #eaeaea;
+            box-shadow: 0 16px 40px rgba(0,0,0,0.06);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-panel::before {
+            content: "";
+            position: absolute;
+            inset: -80px -80px auto auto;
+            width: 240px;
+            height: 240px;
+            background: radial-gradient(circle at 30% 30%, rgba(21,21,21,0.14), rgba(21,21,21,0) 60%);
+            transform: rotate(12deg);
+            pointer-events: none;
+        }
+
+        .login-panel__inner {
+            padding: 28px 18px;
+            max-width: 430px;
+            margin: 0 auto;
+        }
+
+        @media (min-width: 900px) {
+            .login-shell {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .login-panel__inner {
+                max-width: 430px;
+                margin: 0;
+                padding: 34px 34px;
+            }
+
+            .login-panel {
+                height: 100%;
+            }
         }
 
         .login-panel h1 {
@@ -67,6 +113,92 @@
             line-height: 1;
             letter-spacing: 0;
             text-transform: uppercase;
+        }
+
+        .login-hero {
+            display: none;
+            border: 1px solid #eaeaea;
+            box-shadow: 0 16px 40px rgba(0,0,0,0.06);
+            overflow: hidden;
+            position: relative;
+        }
+
+        @media (min-width: 900px) {
+            .login-hero {
+                display: block;
+                background: linear-gradient(135deg, #151515 0%, #2b2b2b 45%, #151515 100%);
+                color: #fff;
+            }
+        }
+
+        .login-hero::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(800px 200px at 10% 20%, rgba(255,255,255,0.16), rgba(255,255,255,0) 60%),
+                radial-gradient(500px 220px at 90% 80%, rgba(255,255,255,0.10), rgba(255,255,255,0) 60%),
+                linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.28) 100%);
+            pointer-events: none;
+        }
+
+        .login-hero__inner {
+            position: relative;
+            z-index: 1;
+            padding: 34px 34px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 18px;
+        }
+
+        .login-hero__tag {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            opacity: 0.85;
+        }
+
+        .login-hero__title {
+            font-family: Helvetica, Arial, sans-serif;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+            font-size: clamp(20px, 3.2vw, 30px);
+            line-height: 1.08;
+            margin: 0;
+        }
+
+        .login-hero__bullets {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            display: grid;
+            gap: 10px;
+        }
+
+        .login-hero__bullet {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+            font-size: 14px;
+            opacity: 0.92;
+        }
+
+        .login-hero__dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.85);
+            margin-top: 5px;
+            flex: 0 0 auto;
+        }
+
+        .login-hero__footer {
+            font-size: 12px;
+            opacity: 0.85;
+            border-top: 1px solid rgba(255,255,255,0.18);
+            padding-top: 14px;
         }
 
         .login-panel p {
@@ -161,11 +293,52 @@
             font: inherit;
             font-weight: 600;
             text-transform: uppercase;
+            margin-top: 8px;
         }
 
         .login-button:hover {
             background: #333;
         }
+
+        .pw-meter {
+            margin-top: 10px;
+            height: 10px;
+            position: relative;
+        }
+
+        .pw-meter__track {
+            height: 10px;
+            width: 100%;
+            border: 1px solid #e2e2e2;
+            background: #fafafa;
+        }
+
+        .pw-meter__fill {
+            height: 100%;
+            width: 0%;
+            background: #a52222;
+            transition: width 140ms ease, background 140ms ease;
+        }
+
+        .pw-meter-label {
+            margin-top: 8px;
+            font-size: 13px;
+            color: #555;
+        }
+
+        .shake {
+            animation: cfShake 380ms ease-in-out;
+        }
+
+        @keyframes cfShake {
+            0% { transform: translateX(0); }
+            20% { transform: translateX(-8px); }
+            40% { transform: translateX(8px); }
+            60% { transform: translateX(-6px); }
+            80% { transform: translateX(6px); }
+            100% { transform: translateX(0); }
+        }
+
 
         .message {
             display: none;
@@ -188,12 +361,118 @@
             color: #247a3a;
         }
 
+        .field-error {
+            display: none;
+            margin-top: 8px;
+            font-size: 13px;
+            color: #a52222;
+        }
+
+        .field-error.is-visible {
+            display: block;
+        }
+
+        .field-error.is-weak-password {
+            color: #8a5b00;
+            font-weight: 600;
+        }
+
+        .form-loading {
+            opacity: 0.7;
+            pointer-events: none;
+        }
+
+        .login-button.is-loading {
+            background: #333;
+            border-color: #333;
+            cursor: progress;
+        }
+
+        .spinner {
+            width: 16px;
+            height: 16px;
+            margin-right: 10px;
+            border-radius: 999px;
+            border: 2px solid rgba(255,255,255,0.25);
+            border-top-color: rgba(255,255,255,1);
+            display: none;
+            animation: cfSpin 0.7s linear infinite;
+            vertical-align: -3px;
+        }
+
+        .login-button.is-loading .spinner {
+            display: inline-block;
+        }
+
+        @keyframes cfSpin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .form-subrow {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            margin: 8px 0 0;
+            font-size: 13px;
+            color: #555;
+        }
+
+        .demo-row {
+            margin-top: 14px;
+            padding: 12px 14px;
+            border: 1px solid #e2e2e2;
+            background: #fafafa;
+        }
+
+        .demo-row__label {
+            font-size: 12px;
+            text-transform: uppercase;
+            color: #666;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            margin-bottom: 8px;
+        }
+
+        .demo-row__actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .ghost-button {
+            border: 1px solid #151515;
+            background: transparent;
+            color: #151515;
+            min-height: 40px;
+            padding: 0 14px;
+            cursor: pointer;
+            font: inherit;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .ghost-button:hover {
+            background: #f3f3f3;
+        }
+
+        .muted-link {
+            font-size: 13px;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            color: #555;
+        }
+
         .signup-text {
             margin-top: 24px;
             color: #555;
             font-size: 14px;
             text-align: center;
         }
+
 
         .signup-text a,
         .form-options a {
@@ -226,55 +505,232 @@
     </header>
 
     <main class="login-page">
-        <section class="login-panel" aria-labelledby="login-title">
-            <h1 id="login-title">Log in</h1>
-            <p>Access your Charlotte Folk clone account using your registered email and password.</p>
-
-            <form id="loginForm" novalidate>
-                <div class="form-group">
-                    <label for="email">Email address</label>
-                    <input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+        <div class="login-shell">
+            <section class="login-hero" aria-hidden="true">
+                <div class="login-hero__inner">
+                    <div>
+                        <div class="login-hero__tag">Charlotte Folk account</div>
+                        <h2 class="login-hero__title">Welcome.</h2>
+                        <ul class="login-hero__bullets">
+                            <li class="login-hero__bullet"><span class="login-hero__dot"></span><span>Save favorites and speed up checkout.</span></li>
+                            <li class="login-hero__bullet"><span class="login-hero__dot"></span><span>Track orders and manage your details.</span></li>
+                        </ul>
+                    </div>
+                    <div class="login-hero__footer">Tip: Use <strong>Show</strong> to confirm your password.</div>
                 </div>
+            </section>
 
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <div class="password-row">
-                        <input id="password" name="password" type="password" autocomplete="current-password" placeholder="Enter password" required>
-                        <button class="toggle-password" type="button" id="togglePassword">Show</button>
+
+            <section class="login-panel" aria-labelledby="login-title">
+                <div class="login-panel__inner">
+                    <h1 id="login-title">Log in</h1>
+                    <p>Access your Charlotte Folk clone account using your registered email and password.</p>
+
+                    <form id="loginForm" novalidate>
+
+                        <div class="form-group">
+                            <label for="email">Email address</label>
+                            <input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <div class="password-row">
+                                <input id="password" name="password" type="password" autocomplete="current-password" placeholder="Enter password" required>
+                                <button class="toggle-password" type="button" id="togglePassword">Show</button>
+                            </div>
+
+                            <div class="pw-meter" aria-hidden="true">
+                                <div class="pw-meter__track"></div>
+                                <div class="pw-meter__fill" id="pwMeterFill"></div>
+                            </div>
+                            <div class="pw-meter-label" id="pwMeterLabel">Password strength: —</div>
+                        </div>
+
+                        <div class="form-options">
+                            <label class="remember" for="remember">
+                                <input id="remember" name="remember" type="checkbox">
+                                Remember me
+                            </label>
+                            <a href="#" id="forgotPassword">Forgot password?</a>
+                        </div>
+
+                        <button class="login-button" type="submit">Log in</button>
+
+                        <div class="form-subrow" aria-hidden="true" style="margin-top: -6px;">
+                            <span id="capsLockHint" class="muted-link" style="display:none;">Caps Lock is on</span>
+                            <span id="passwordHint" class="muted-link">Tip: Use 6+ chars</span>
+                        </div>
+
+                        <div class="message" id="loginMessage" role="status" aria-live="polite"></div>
+                    </form>
+
+                    <div class="signup-text">
+                        New customer? <a href="register.html">Create account</a>
                     </div>
                 </div>
-
-                <div class="form-options">
-                    <label class="remember" for="remember">
-                        <input id="remember" name="remember" type="checkbox">
-                        Remember me
-                    </label>
-                    <a href="#" id="forgotPassword">Forgot password?</a>
-                </div>
-
-                <button class="login-button" type="submit">Log in</button>
-                <div class="message" id="loginMessage" role="status" aria-live="polite"></div>
-            </form>
-
-            <div class="signup-text">
-                New customer? <a href="register.html">Create account</a>
-            </div>
-        </section>
+            </section>
+        </div>
     </main>
 
-    <script>
-        const demoUser = {
-            email: "customer@charlottefolk.com",
-            password: "charlotte123"
-        };
 
+    <script>
         const loginForm = document.getElementById("loginForm");
         const emailInput = document.getElementById("email");
         const passwordInput = document.getElementById("password");
+
         const rememberInput = document.getElementById("remember");
         const loginMessage = document.getElementById("loginMessage");
         const togglePassword = document.getElementById("togglePassword");
         const forgotPassword = document.getElementById("forgotPassword");
+        const capsLockHint = document.getElementById("capsLockHint");
+        const passwordHint = document.getElementById("passwordHint");
+
+
+        const emailFieldErrorId = "emailFieldError";
+        const passwordFieldErrorId = "passwordFieldError";
+
+        function ensureFieldErrorElements() {
+            if (!document.getElementById(emailFieldErrorId)) {
+                const emailWrap = emailInput.parentElement;
+                const emailErr = document.createElement("div");
+                emailErr.id = emailFieldErrorId;
+                emailErr.className = "field-error";
+                emailWrap.appendChild(emailErr);
+            }
+
+            if (!document.getElementById(passwordFieldErrorId)) {
+                const passwordWrap = passwordInput.parentElement.parentElement;
+                const passErr = document.createElement("div");
+                passErr.id = passwordFieldErrorId;
+                passErr.className = "field-error";
+                passwordWrap.appendChild(passErr);
+            }
+        }
+
+        function showFieldError(id, message, extraClass) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            el.textContent = message;
+            el.className = "field-error is-visible" + (extraClass ? " " + extraClass : "");
+        }
+
+        function clearFieldError(id) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            el.textContent = "";
+            el.className = "field-error";
+        }
+
+        function setLoading(isLoading) {
+            const submitBtn = loginForm.querySelector("button[type='submit']");
+            if (!submitBtn) return;
+
+            if (isLoading) {
+                loginForm.classList.add("form-loading");
+                submitBtn.classList.add("is-loading");
+                submitBtn.disabled = true;
+                submitBtn.dataset.originalText = submitBtn.dataset.originalText || submitBtn.textContent;
+                if (!submitBtn.querySelector(".spinner")) {
+                    const spinner = document.createElement("span");
+                    spinner.className = "spinner";
+                    spinner.setAttribute("aria-hidden", "true");
+                    submitBtn.prepend(spinner);
+                }
+                submitBtn.childNodes.forEach(function (n) {
+                    if (n.nodeType === Node.TEXT_NODE) return;
+                });
+                submitBtn.childNodes.forEach(function (n) {
+                    if (n.nodeType === Node.ELEMENT_NODE && n.classList.contains("spinner")) return;
+                });
+                submitBtn.lastChild && submitBtn.lastChild.nodeType === Node.TEXT_NODE && (submitBtn.lastChild.textContent = "");
+                submitBtn.innerHTML = "";
+                const spinner = document.createElement("span");
+                spinner.className = "spinner";
+                spinner.setAttribute("aria-hidden", "true");
+                const text = document.createElement("span");
+                text.textContent = "Logging in...";
+                submitBtn.appendChild(spinner);
+                submitBtn.appendChild(text);
+            } else {
+                loginForm.classList.remove("form-loading");
+                submitBtn.classList.remove("is-loading");
+                submitBtn.disabled = false;
+                const original = submitBtn.dataset.originalText || "Log in";
+                submitBtn.innerHTML = original;
+            }
+        }
+
+        const pwMeterFill = document.getElementById("pwMeterFill");
+        const pwMeterLabel = document.getElementById("pwMeterLabel");
+
+        function scorePasswordStrength(pw) {
+
+            const value = pw || "";
+            let score = 0;
+
+            // length
+            if (value.length >= 8) score += 35;
+            else if (value.length >= 6) score += 20;
+
+            // variety
+            const hasLower = /[a-z]/.test(value);
+            const hasUpper = /[A-Z]/.test(value);
+            const hasNumber = /\d/.test(value);
+            const hasSymbol = /[^A-Za-z0-9]/.test(value);
+
+            const variety = [hasLower, hasUpper, hasNumber, hasSymbol].filter(Boolean).length;
+            score += variety * 15;
+
+            // clamp
+            score = Math.max(0, Math.min(100, score));
+
+            let label = "Weak";
+            let color = "#a52222";
+            if (score >= 70) {
+                label = "Strong";
+                color = "#247a3a";
+            } else if (score >= 45) {
+                label = "Good";
+                color = "#1f41e8";
+            } else if (score >= 25) {
+                label = "Fair";
+                color = "#8a5b00";
+            }
+
+            return { score, label, color };
+        }
+
+        function updatePasswordGuidance() {
+            const pw = passwordInput.value;
+
+            if (!pw) {
+                passwordHint.textContent = "Tip: Use 6+ chars";
+                passwordHint.style.color = "#555";
+                if (pwMeterFill) pwMeterFill.style.width = "0%";
+                if (pwMeterFill) pwMeterFill.style.background = "#a52222";
+                if (pwMeterLabel) pwMeterLabel.textContent = "Password strength: —";
+                return;
+            }
+
+            const strength = scorePasswordStrength(pw);
+            if (pw.length < 6) {
+                passwordHint.textContent = "Password too short";
+                passwordHint.style.color = "#8a5b00";
+                if (pwMeterFill) pwMeterFill.style.background = "#a52222";
+            } else {
+                passwordHint.style.color = strength.color;
+                passwordHint.textContent = strength.label === "Strong" ? "Strong password" : "Good to go";
+            }
+
+            if (pwMeterFill) pwMeterFill.style.width = strength.score + "%";
+            if (pwMeterFill) pwMeterFill.style.background = strength.color;
+            if (pwMeterLabel) pwMeterLabel.textContent = "Password strength: " + strength.label;
+        }
+
+
+
+
 
         function showMessage(text, type) {
             loginMessage.textContent = text;
@@ -292,43 +748,108 @@
         function handleLogin(event) {
             event.preventDefault();
 
+            ensureFieldErrorElements();
+            clearFieldError(emailFieldErrorId);
+            clearFieldError(passwordFieldErrorId);
+
             const email = emailInput.value.trim().toLowerCase();
             const password = passwordInput.value.trim();
 
-            if (!email || !password) {
-                showMessage("Please enter your email and password.", "error");
+            const shakeTarget = loginForm;
+            function fail(msg) {
+                showMessage(msg, "error");
+                shakeTarget.classList.remove("shake");
+                // Force reflow to restart animation.
+                void shakeTarget.offsetWidth;
+                shakeTarget.classList.add("shake");
+                setTimeout(function () {
+                    shakeTarget.classList.remove("shake");
+                }, 420);
+            }
+
+            if (!email) {
+                fail("Please enter your email.");
+                showFieldError(emailFieldErrorId, "Email is required.");
+                emailInput.focus();
+                return;
+            }
+
+            if (!password) {
+                fail("Please enter your password.");
+                showFieldError(passwordFieldErrorId, "Password is required.");
+                passwordInput.focus();
                 return;
             }
 
             if (!isValidEmail(email)) {
-                showMessage("Please enter a valid email address.", "error");
+                fail("Please enter a valid email address.");
+                showFieldError(emailFieldErrorId, "That email doesn't look right.");
+                emailInput.focus();
                 return;
             }
 
-            const registeredUsers = getRegisteredUsers();
-            const registeredUser = registeredUsers.find(function (user) {
-                return user.email === email && user.password === password;
-            });
+            setLoading(true);
 
-            if ((email === demoUser.email && password === demoUser.password) || registeredUser) {
-                const storage = rememberInput.checked ? localStorage : sessionStorage;
-                storage.setItem("cfLoggedInUser", email);
-                showMessage("Login successful. Redirecting to the homepage...", "success");
 
-                setTimeout(function () {
-                    window.location.href = "index.html";
-                }, 900);
-                return;
-            }
+            // Simulate a tiny delay for nicer UX in this static clone.
+            setTimeout(function () {
+                const registeredUsers = getRegisteredUsers();
+                const registeredUser = registeredUsers.find(function (user) {
+                    return user.email === email && user.password === password;
+                });
 
-            showMessage("Invalid login. Try your registered account or customer@charlottefolk.com and charlotte123.", "error");
+
+                if (registeredUser) {
+
+                    const storage = rememberInput.checked ? localStorage : sessionStorage;
+                    storage.setItem("cfLoggedInUser", email);
+                    showMessage("Welcome back! Redirecting...", "success");
+
+                    setTimeout(function () {
+                        window.location.href = "index.html";
+                    }, 700);
+                    return;
+                }
+
+                showMessage("Invalid login. Check your details and try again.", "error");
+                showFieldError(passwordFieldErrorId, "Wrong email or password.");
+                setLoading(false);
+            }, 500);
         }
 
+
+        ensureFieldErrorElements();
+
+
+
+        // Keep the original single-click behavior.
         togglePassword.addEventListener("click", function () {
+
             const isPassword = passwordInput.type === "password";
             passwordInput.type = isPassword ? "text" : "password";
             togglePassword.textContent = isPassword ? "Hide" : "Show";
         });
+
+        emailInput.addEventListener("input", function () {
+            clearFieldError(emailFieldErrorId);
+        });
+
+        passwordInput.addEventListener("input", function () {
+            clearFieldError(passwordFieldErrorId);
+            updatePasswordGuidance();
+        });
+
+        passwordInput.addEventListener("focus", function () {
+            updatePasswordGuidance();
+        });
+
+        passwordInput.addEventListener("keyup", function (event) {
+            const isCaps = event.getModifierState && event.getModifierState("CapsLock");
+            if (capsLockHint) {
+                capsLockHint.style.display = isCaps ? "inline" : "none";
+            }
+        });
+
 
         forgotPassword.addEventListener("click", function (event) {
             event.preventDefault();
@@ -336,6 +857,9 @@
         });
 
         loginForm.addEventListener("submit", handleLogin);
+
+
     </script>
 </body>
 </html>
+

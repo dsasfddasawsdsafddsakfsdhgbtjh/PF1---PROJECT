@@ -132,6 +132,16 @@
                 text-transform: uppercase;
             }
 
+            .cf-wishlist-button {
+                background: #fff;
+                color: #151515;
+                border-color: #151515;
+            }
+
+            .cf-wishlist-button:hover {
+                background: #f2f2f2;
+            }
+
             .cf-add-cart-button:hover {
                 background: #333;
             }
@@ -176,27 +186,63 @@
         document.head.appendChild(style);
     }
 
+    function addToWishlist(product) {
+        const cart = getCart();
+        const existingItem = cart.find(function (item) {
+            return item.id === product.id && item.type === "wishlist";
+        });
+
+        const wishlistItem = Object.assign({}, product, { type: "wishlist" });
+
+        if (existingItem) {
+            existingItem.quantity += 1;
+        } else {
+            cart.push(wishlistItem);
+        }
+
+        saveCart(cart);
+        showCartNotice(product.title + " added to wishlist.");
+    }
+
     function setupProductCards() {
         const cards = document.querySelectorAll("product-card");
 
         cards.forEach(function (card) {
+            const info = card.querySelector(".product-card-info") || card;
+
             if (card.querySelector(".cf-add-cart-button")) {
+                // Still ensure wishlist button exists even if cart button already injected.
+            } else {
+                const addButton = document.createElement("button");
+                addButton.className = "cf-add-cart-button";
+                addButton.type = "button";
+                addButton.textContent = "Add to cart";
+
+                addButton.addEventListener("click", function (event) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    addToCart(getProductFromCard(card));
+                });
+
+                info.appendChild(addButton);
+            }
+
+            if (card.querySelector(".cf-wishlist-button")) {
                 return;
             }
 
-            const info = card.querySelector(".product-card-info") || card;
-            const button = document.createElement("button");
-            button.className = "cf-add-cart-button";
-            button.type = "button";
-            button.textContent = "Add to cart";
+            const wishlistButton = document.createElement("button");
+            wishlistButton.className = "cf-add-cart-button cf-wishlist-button";
+            wishlistButton.type = "button";
+            wishlistButton.textContent = "Wishlist";
 
-            button.addEventListener("click", function (event) {
+            wishlistButton.addEventListener("click", function (event) {
                 event.preventDefault();
                 event.stopPropagation();
-                addToCart(getProductFromCard(card));
+                addToWishlist(getProductFromCard(card));
             });
 
-            info.appendChild(button);
+            info.appendChild(wishlistButton);
         });
     }
 
@@ -242,7 +288,7 @@
                 <img src="${item.image}" alt="${item.title}">
                 <div class="cart-item__details">
                     <h2>${item.title}</h2>
-                    <p>${formatMoney(item.price)}</p>
+                    <p>${formatMoney(item.price)}${item.type === "wishlist" ? " <strong>(wishlist)</strong>" : ""}</p>
                     <div class="quantity-control">
                         <button type="button" data-cart-action="decrease" data-cart-index="${index}">-</button>
                         <span>${item.quantity}</span>
