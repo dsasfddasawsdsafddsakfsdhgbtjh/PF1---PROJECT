@@ -258,9 +258,10 @@
         <a class="logo" href="index.html">Charlotte Folk</a>
         <nav class="nav-links" aria-label="Main navigation">
             <a href="index.html">Home</a>
-            <a href="collections.html">Collections</a>
-            <a href="contact.html">Support</a>
-            <a href="cart.html" data-cart-link>Cart</a>
+            <a href="shop-list.html">Shop</a>
+            <a href="search.html">Search</a>
+            <a href="wishlist.html">Wishlist</a>
+            <a href="account.html">Account</a>
         </nav>
     </header>
 
@@ -291,5 +292,75 @@
     </main>
 
     <script src="preload.js" defer></script>
+    <script>
+        // Load and display cart items
+        function loadCart() {
+            const cart = JSON.parse(localStorage.getItem('cfCart')) || [];
+            const cartList = document.querySelector('.cart-list');
+            const cartSummary = document.getElementById('cartSummary');
+            
+            if (cart.length === 0) {
+                cartList.innerHTML = '<p style="color:#666; font-size:16px;">Your cart is empty. <a href="shop-list.html" style="text-decoration:underline;">Continue shopping</a></p>';
+                cartSummary.hidden = true;
+                return;
+            }
+
+            cartList.innerHTML = '';
+            let subtotal = 0;
+
+            cart.forEach((item, index) => {
+                const price = parseFloat(item.price.replace(/[^0-9.]/g, '')) || 0;
+                const itemTotal = price * item.quantity;
+                subtotal += itemTotal;
+
+                const cartItem = document.createElement('div');
+                cartItem.className = 'cart-item';
+                cartItem.innerHTML = `
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%23f7f7f7' width='100' height='100'/%3E%3Ctext x='50' y='50' text-anchor='middle' dy='.3em' fill='%23999' font-family='sans-serif' font-size='12'%3EProduct%3C/text%3E%3C/svg%3E" alt="${item.title}">
+                    <div>
+                        <h2>${item.title}</h2>
+                        <p>Size: <strong>${item.size}</strong> | Qty: <strong>${item.quantity}</strong></p>
+                        <p style="color:#666;">${item.price}</p>
+                    </div>
+                    <div class="cart-item__total">
+                        <div>${item.price}</div>
+                        <button type="button" class="remove-btn" data-index="${index}">Remove</button>
+                    </div>
+                `;
+                
+                cartList.appendChild(cartItem);
+            });
+
+            // Format and display subtotal
+            document.getElementById('cartSubtotal').textContent = `PHP ${subtotal.toFixed(2)}`;
+            cartSummary.hidden = false;
+
+            // Add remove button listeners
+            document.querySelectorAll('.remove-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const index = parseInt(this.dataset.index);
+                    cart.splice(index, 1);
+                    localStorage.setItem('cfCart', JSON.stringify(cart));
+                    loadCart();
+                });
+            });
+        }
+
+        // Checkout button
+        document.getElementById('checkoutButton').addEventListener('click', function() {
+            alert('Checkout is not connected in this static clone. Cart items saved locally.');
+        });
+
+        // Clear cart button
+        document.getElementById('clearCart').addEventListener('click', function() {
+            if (confirm('Clear all items from cart?')) {
+                localStorage.setItem('cfCart', JSON.stringify([]));
+                loadCart();
+            }
+        });
+
+        // Load cart on page load
+        loadCart();
+    </script>
 </body>
 </html>
