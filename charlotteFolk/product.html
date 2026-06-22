@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product | Charlotte Folk</title>
+    <link rel="icon" type="image/png" href="https://cdn.shopify.com/s/files/1/0527/5805/3051/files/cf_logoo_5d0317aa-f546-437b-9f7d-655c0c2769c0.png?crop=center&height=32&v=1723628464&width=32">
+    <style>
+        * { box-sizing: border-box; }
+        body { margin:0; min-height:100vh; color:#151515; background:#fff; font-family: "Roboto Condensed", Arial, sans-serif; }
+        a { color: inherit; text-decoration: none; }
+        
+        .site-header { display:flex; align-items:center; justify-content:space-between; gap:24px; min-height:74px; padding:18px clamp(18px,4vw,48px); border-bottom:1px solid #e2e2e2; }
+        .logo { font-family: Helvetica, Arial, sans-serif; font-size:18px; font-weight:700; text-transform:uppercase; }
+        .nav-links { display:flex; align-items:center; gap:22px; font-size:13px; text-transform:uppercase; }
+        .nav-links a:hover { opacity: 0.7; }
+
+        .product-page { max-width: 1200px; margin: 0 auto; padding: 40px 18px; }
+        
+        .breadcrumb { font-size: 12px; color: #666; margin-bottom: 20px; }
+        .breadcrumb a { text-decoration: underline; }
+        
+        .product-detail { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+        
+        .product-image { 
+            width: 100%; 
+            aspect-ratio: 1; 
+            background: linear-gradient(135deg, #f7f7f7, #ececec);
+            border: 1px solid #e2e2e2;
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-size: 18px; 
+            color: #999;
+        }
+        
+        .product-info h1 { margin: 0 0 12px; font-size: 32px; font-weight: 700; text-transform: uppercase; }
+        .product-price { font-size: 24px; font-weight: 600; color: #151515; margin-bottom: 20px; }
+        .product-desc { color: #666; line-height: 1.6; margin-bottom: 24px; }
+        
+        .size-selector { margin-bottom: 24px; }
+        .size-selector label { display: block; margin-bottom: 10px; font-weight: 700; text-transform: uppercase; font-size: 14px; }
+        .size-options { display: flex; gap: 10px; flex-wrap: wrap; }
+        .size-btn { 
+            min-width: 60px; 
+            min-height: 44px; 
+            border: 1px solid #dedede; 
+            background: #fff; 
+            cursor: pointer; 
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .size-btn:hover { border-color: #151515; }
+        .size-btn.selected { border-color: #151515; background: #151515; color: #fff; }
+        
+        .quantity-selector { margin-bottom: 24px; }
+        .quantity-selector label { display: block; margin-bottom: 10px; font-weight: 700; text-transform: uppercase; font-size: 14px; }
+        .qty-control { display: inline-flex; border: 1px solid #dedede; }
+        .qty-control button { width: 44px; height: 44px; border: 0; background: #fff; cursor: pointer; font-weight: 700; }
+        .qty-control input { width: 60px; border: 0; text-align: center; font-size: 16px; }
+        
+        .product-actions { display: flex; gap: 12px; margin-bottom: 24px; }
+        .btn { 
+            flex: 1;
+            min-height: 50px; 
+            border: 1px solid #151515; 
+            background: #151515; 
+            color: #fff; 
+            cursor: pointer; 
+            font-weight: 700; 
+            text-transform: uppercase; 
+            font-size: 14px;
+            font: inherit;
+            transition: all 0.2s;
+        }
+        .btn:hover { background: #333; }
+        .btn.wishlist-btn { 
+            flex: 0 0 auto;
+            width: 140px;
+            background: transparent; 
+            color: #151515;
+        }
+        .btn.wishlist-btn:hover { background: #f7f7f7; }
+        
+        .success-msg { display: none; margin-top: 20px; padding: 12px 16px; border: 1px solid #247a3a; background: #f0f9f5; color: #247a3a; border-radius: 4px; }
+        .success-msg.show { display: block; }
+        
+        @media (max-width: 900px) {
+            .product-detail { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <a class="logo" href="index.html">Charlotte Folk</a>
+        <nav class="nav-links" aria-label="Main navigation">
+            <a href="index.html">Home</a>
+            <a href="shop-list.html">Shop</a>
+            <a href="search.html">Search</a>
+            <a href="wishlist.html">Wishlist</a>
+            <a href="account.html">Account</a>
+        </nav>
+    </header>
+
+    <main class="product-page">
+        <div class="breadcrumb">
+            <a href="shop-list.html">Shop</a> / <span id="breadcrumbTitle">Product</span>
+        </div>
+
+        <div class="product-detail">
+            <div class="product-image" id="productImage">[Product Image]</div>
+
+            <div class="product-info">
+                <h1 id="productTitle">Product Name</h1>
+                <div class="product-price" id="productPrice">₱2,500</div>
+                <p class="product-desc" id="productDesc">High-quality product from Charlotte Folk. Perfect for everyday wear.</p>
+
+                <div class="size-selector">
+                    <label>Size</label>
+                    <div class="size-options" id="sizeOptions">
+                        <button class="size-btn" data-size="XS">XS</button>
+                        <button class="size-btn" data-size="S">S</button>
+                        <button class="size-btn" data-size="M" class="selected">M</button>
+                        <button class="size-btn" data-size="L">L</button>
+                        <button class="size-btn" data-size="XL">XL</button>
+                    </div>
+                </div>
+
+                <div class="quantity-selector">
+                    <label>Quantity</label>
+                    <div class="qty-control">
+                        <button id="qtyMinus">−</button>
+                        <input type="number" id="quantity" value="1" min="1" max="99">
+                        <button id="qtyPlus">+</button>
+                    </div>
+                </div>
+
+                <div class="product-actions">
+                    <button class="btn" id="addToCartBtn">Add to Cart</button>
+                    <button class="btn wishlist-btn" id="wishlistBtn">♡ Wishlist</button>
+                </div>
+
+                <div class="success-msg" id="successMsg">Added to cart! <a href="cart.html" style="text-decoration:underline;">View cart</a></div>
+            </div>
+        </div>
+    </main>
+
+    <script src="wishlist.js"></script>
+    <script>
+        // Get product ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = urlParams.get('id') || 'unknown-product';
+
+        // Sample product database
+        const products = {
+            '1996-hoodie': { title: '1996 Hoodie', price: '₱1,890', desc: 'Comfortable hoodie from 1996 collection.' },
+            '1996-sweater': { title: '1996 Sweater', price: '₱1,590', desc: 'Stylish sweater from 1996 collection. Available in multiple colors.' },
+            '1996-tee': { title: '1996 Tee', price: '₱1,190', desc: 'Classic tee from 1996 collection.' },
+            '1996-tote-bag': { title: '1996 Tote Bag', price: '₱2,490', desc: 'Durable tote bag in various colors. Perfect for everyday use.' },
+            'basic-hoodies': { title: 'Basic Hoodie', price: '₱1,250', desc: 'Versatile basic hoodie. Available in black, white, and gray.' },
+            'basic-tee': { title: 'Basic Tee', price: '₱450', desc: 'Essential basic tee. Comfortable and timeless.' },
+            'campus-club-cap': { title: 'Campus Club Cap', price: '₱1,190', desc: 'Classic cap from Campus Club collection.' },
+            'campus-club-denim-pants': { title: 'Campus Club Denim Pants', price: '₱2,390', desc: 'Durable denim pants from Campus Club collection.' },
+            'campus-core-caps-1': { title: 'Campus Core Caps', price: '₱1,190', desc: 'Premium caps from Campus Core collection.' },
+            'campus-core-collared-knit-top': { title: 'Campus Core Collared Knit Top', price: '₱1,890', desc: 'Stylish knit top from Campus Core collection.' },
+            'campus-core-double-zip-sweater': { title: 'Campus Core Double Zip Sweater', price: '₱2,590', desc: 'Premium sweater with double zip from Campus Core.' },
+            'campus-core-leather-jacket-mens': { title: 'Campus Core Leather Jacket', price: '₱3,590', desc: 'Premium leather jacket from Campus Core collection.' },
+            'campus-core-leather-jacket-mens-copy': { title: 'Campus Core Leather Jacket', price: '₱3,590', desc: 'Premium leather jacket from Campus Core collection.' },
+            'campus-league-caps': { title: 'Campus League Caps', price: '₱1,190', desc: 'Stylish caps from Campus League collection.' },
+            'campus-league-jacket': { title: 'Campus League Jacket', price: '₱2,890', desc: 'Classic jacket from Campus League collection.' },
+            'campus-league-jacket-1': { title: 'Campus League Jacket', price: '₱2,890', desc: 'Classic jacket from Campus League collection.' },
+            'cf-belt-pre-order': { title: 'CF Belt (Pre-Order)', price: '₱890', desc: 'Premium belt coming soon. Pre-order now!' },
+            'cf-belt-pre-order-copy': { title: 'CF Belt (Pre-Order)', price: '₱890', desc: 'Premium belt coming soon. Pre-order now!' },
+            'cf-city-hoodie-3': { title: 'CF City Hoodie', price: '₱1,890', desc: 'Urban-inspired hoodie from CF City collection.' },
+            'cf-city-sweater': { title: 'CF City Sweater', price: '₱1,690', desc: 'Stylish sweater from CF City collection.' },
+            'cf-city-sweater-2': { title: 'CF City Sweater', price: '₱1,690', desc: 'Stylish sweater from CF City collection.' },
+            'cf-city-tee': { title: 'CF City Tee', price: '₱650', desc: 'Classic tee from CF City collection.' },
+            'cf-city-tee-1': { title: 'CF City Tee', price: '₱650', desc: 'Classic tee from CF City collection.' },
+            'cf-iphone-case-2': { title: 'CF iPhone Case', price: '₱590', desc: 'Protective iPhone case with CF logo.' },
+            'cf-mug-metro-manila-orders-only': { title: 'CF Mug (Metro Manila Orders Only)', price: '₱390', desc: 'Stylish CF mug available for Metro Manila orders only.' },
+            'cf-originals-hoodie-black': { title: 'CF Originals Hoodie', price: '₱1,590', desc: 'Classic black hoodie from CF Originals collection.' },
+            'cf-originals-tee-black': { title: 'CF Originals Tee', price: '₱650', desc: 'Classic black tee from CF Originals collection.' },
+            'cf-quilted-poof-pouch': { title: 'Quilted Poof Pouch', price: '₱1,200', desc: 'Cute quilted pouch for all your essentials.' },
+            'cf-slides-pre-order': { title: 'CF Slides (Pre-Order)', price: '₱950', desc: 'Comfortable slides coming soon. Pre-order now!' },
+            'cf-tumblr': { title: 'CF Tumblr Tee', price: '₱700', desc: 'Limited edition Tumblr-inspired tee.' },
+            'cf2018-hoodie': { title: 'CF 2018 Hoodie', price: '₱1,500', desc: 'Warm and cozy hoodie from 2018 collection.' },
+            'cf2018-tee': { title: 'CF 2018 Tee', price: '₱650', desc: 'Classic tee from 2018 collection.' },
+            'cfss22-tee-onyx': { title: 'CF SS22 Tee Onyx', price: '₱750', desc: 'Summer 2022 onyx tee.' },
+            'cfxxi-sweater': { title: 'CF XXI Sweater', price: '₱2,200', desc: 'Luxurious sweater from XXI collection.' },
+            'cfxxi-tee': { title: 'CF XXI Tee', price: '₱700', desc: 'Premium tee from XXI collection.' },
+            'charlotte-folk-gift-card': { title: 'Charlotte Folk Gift Card', price: 'From ₱500', desc: 'Give the gift of Charlotte Folk style!' },
+            'cherry-regular-tee': { title: 'Cherry Regular Tee', price: '₱650', desc: 'Classic cherry-inspired tee.' },
+            'cherry-sweater-1': { title: 'Cherry Sweater', price: '₱1,690', desc: 'Stylish cherry-inspired sweater.' },
+            'chroma-hoodie-black': { title: 'Chroma Hoodie Black', price: '₱1,890', desc: 'Premium black hoodie from Chroma collection.' },
+            'city-index-caps': { title: 'City Index Caps', price: '₱1,190', desc: 'Urban-inspired caps from City Index collection.' },
+            'city-index-knit-sweater-01': { title: 'City Index Knit Sweater', price: '₱2,290', desc: 'Premium knit sweater from City Index collection.' },
+            'city-index-relaxed-tee': { title: 'City Index Relaxed Tee', price: '₱750', desc: 'Comfortable relaxed tee from City Index collection.' },
+            'classic-hoodie': { title: 'Classic Hoodie', price: '₱1,590', desc: 'Timeless classic hoodie for everyday wear.' },
+            'copy-of-chroma-tee-forest': { title: 'Chroma Tee Forest', price: '₱650', desc: 'Forest green tee from Chroma collection.' },
+            'denim-jacket': { title: 'Denim Jacket', price: '₱2,890', desc: 'Classic denim jacket, perfect for any wardrobe.' },
+            'gift-card': { title: 'Charlotte Folk Gift Card', price: 'From ₱500', desc: 'Give the gift of Charlotte Folk style!' },
+            'new-york-cap': { title: 'NY Cap', price: '₱1,290', desc: 'Classic cap from New York collection.' },
+            'ny-bomber-jacket': { title: 'NY Bomber Jacket', price: '₱2,190', desc: 'Classic bomber jacket perfect for layering.' },
+            'ny-jersey-1': { title: 'NY Jersey', price: '₱1,390', desc: 'Classic NY jersey from New York collection.' },
+            'ny-leather-jacket': { title: 'NY Leather Jacket', price: '₱2,500', desc: 'Premium leather jacket from NY collection. Classic style with modern comfort.' },
+            'ny-leather-jacket-brown': { title: 'NY Leather Jacket (Brown)', price: '₱2,500', desc: 'Premium brown leather jacket from NY collection.' },
+            'ny-pants': { title: 'NY Pants', price: '₱1,890', desc: 'Versatile pants from NY collection.' },
+            'ny-suit': { title: 'NY Suit', price: '₱3,890', desc: 'Premium suit from NY collection.' },
+            'ny-track-pants': { title: 'NY Track Pants', price: '₱1,590', desc: 'Comfortable track pants for everyday wear.' },
+            'ny-track-suit': { title: 'NY Track Suit', price: '₱2,290', desc: 'Comfortable and stylish track suit.' },
+            'ny-varsity-jacket': { title: 'NY Varsity Jacket', price: '₱1,800', desc: 'Stylish varsity jacket perfect for any occasion.' },
+            'off-campus-cap-pre-order': { title: 'Off-Campus Cap (Pre-Order)', price: '₱1,190', desc: 'Limited edition off-campus cap. Pre-order now!' }
+        };
+
+        const product = products[productId] || { title: 'Product Not Found', price: '₱0', desc: 'This product could not be found.' };
+
+        // Load product info
+        document.getElementById('productTitle').textContent = product.title;
+        document.getElementById('breadcrumbTitle').textContent = product.title;
+        document.getElementById('productPrice').textContent = product.price;
+        document.getElementById('productDesc').textContent = product.desc;
+        document.title = `${product.title} | Charlotte Folk`;
+
+        // Size selector
+        let selectedSize = 'M';
+        document.querySelectorAll('.size-btn').forEach(btn => {
+            if (btn.dataset.size === selectedSize) btn.classList.add('selected');
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('selected'));
+                this.classList.add('selected');
+                selectedSize = this.dataset.size;
+            });
+        });
+
+        // Quantity controls
+        let quantity = 1;
+        const qtyInput = document.getElementById('quantity');
+        document.getElementById('qtyMinus').addEventListener('click', () => {
+            quantity = Math.max(1, quantity - 1);
+            qtyInput.value = quantity;
+        });
+        document.getElementById('qtyPlus').addEventListener('click', () => {
+            quantity = Math.min(99, quantity + 1);
+            qtyInput.value = quantity;
+        });
+        qtyInput.addEventListener('change', (e) => {
+            quantity = Math.max(1, Math.min(99, parseInt(e.target.value) || 1));
+            qtyInput.value = quantity;
+        });
+
+        // Add to cart
+        document.getElementById('addToCartBtn').addEventListener('click', function() {
+            const cart = JSON.parse(localStorage.getItem('cfCart')) || [];
+            const cartItem = {
+                id: productId,
+                title: product.title,
+                price: product.price,
+                size: selectedSize,
+                quantity: quantity
+            };
+            cart.push(cartItem);
+            localStorage.setItem('cfCart', JSON.stringify(cart));
+            
+            const msg = document.getElementById('successMsg');
+            msg.classList.add('show');
+            setTimeout(() => msg.classList.remove('show'), 3000);
+        });
+
+        // Wishlist button
+        const wishlistBtn = document.getElementById('wishlistBtn');
+        const currentUser = WishlistUtil.getCurrentUser();
+        const isWished = WishlistUtil.has(productId);
+        wishlistBtn.textContent = currentUser === 'guest' ? '♡ Log in to wishlist' : (isWished ? '♥ Wishlisted' : '♡ Wishlist');
+        
+        wishlistBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const currentUser = WishlistUtil.getCurrentUser();
+            if (currentUser === 'guest') {
+                WishlistUtil.notify('Please log in to use wishlist');
+                setTimeout(() => window.location.href = 'login.html', 1000);
+                return;
+            }
+            
+            if (WishlistUtil.has(productId)) {
+                WishlistUtil.remove(productId);
+                wishlistBtn.textContent = '♡ Wishlist';
+            } else {
+                WishlistUtil.add(productId, product.title, window.location.href);
+                wishlistBtn.textContent = '♥ Wishlisted';
+            }
+        });
+    </script>
+</body>
+</html>

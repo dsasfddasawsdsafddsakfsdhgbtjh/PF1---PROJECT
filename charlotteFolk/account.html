@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account | Charlotte Folk</title>
+    <link rel="icon" type="image/png" href="https://cdn.shopify.com/s/files/1/0527/5805/3051/files/cf_logoo_5d0317aa-f546-437b-9f7d-655c0c2769c0.png?crop=center&height=32&v=1723628464&width=32">
+    <style>
+        * { box-sizing: border-box; }
+        body { margin:0; min-height:100vh; color:#151515; background:#fff; font-family: "Roboto Condensed", Arial, sans-serif; }
+        a { color: inherit; text-decoration: none; }
+        .site-header { display:flex; align-items:center; justify-content:space-between; gap:24px; min-height:74px; padding:18px clamp(18px,4vw,48px); border-bottom:1px solid #e2e2e2; }
+        .logo { font-family: Helvetica, Arial, sans-serif; font-size:18px; font-weight:700; text-transform:uppercase; }
+        .nav-links { display:flex; align-items:center; gap:22px; font-size:13px; text-transform:uppercase; }
+        .account-shell { max-width: 1100px; margin: 40px auto; padding: 0 18px; }
+        .account-grid { display:grid; grid-template-columns: 260px 1fr; gap: 24px; }
+        .account-nav { border:1px solid #eaeaea; padding:18px; }
+        .account-nav a { display:block; padding:10px 0; color:#151515; font-weight:700; }
+        .account-main { border:1px solid #eaeaea; padding:18px; }
+        .section-title { margin:0 0 12px; font-size:18px; font-weight:700; text-transform:uppercase; }
+
+        /* Wishlist */
+        .wishlist-controls { display:flex; gap:10px; margin-bottom:12px; align-items:center; }
+        .wishlist-controls input[type="text"] { flex:1; min-height:44px; padding:10px; border:1px solid #dedede; }
+        .btn { min-height:44px; padding:0 14px; border:1px solid #151515; background:#151515; color:#fff; cursor:pointer; font-weight:700; text-transform:uppercase; }
+        .btn.ghost { background:transparent; color:#151515; }
+        .wishlist-list { list-style:none; margin:0; padding:0; display:grid; gap:12px; }
+        .wishlist-item { display:flex; gap:12px; align-items:center; border:1px solid #f0f0f0; padding:10px; }
+        .wishlist-item__title { font-weight:700; }
+        .muted { color:#666; font-size:13px; }
+        @media (max-width:900px) { .account-grid { grid-template-columns: 1fr; } .account-nav { order:2; } }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <a class="logo" href="index.html">Charlotte Folk</a>
+        <nav class="nav-links" aria-label="Main navigation">
+            <a href="index.html">Home</a>
+            <a href="collections.html">Collections</a>
+            <a href="search.html">Search</a>
+            <a href="wishlist.html">Wishlist</a>
+            <a href="account.html">Account</a>
+        </nav>
+    </header>
+
+    <main class="account-shell">
+        <div class="account-grid">
+            <aside class="account-nav" aria-label="Account navigation">
+                <a href="#profile">Profile</a>
+                <a href="#orders">Orders</a>
+                <a href="wishlist.html">Wishlist</a>
+                <a href="login.html" id="logoutLink">Log out</a>
+            </aside>
+
+            <section class="account-main">
+                <h2 class="section-title">My Account</h2>
+
+                <div id="profile">
+                    <p class="muted">Signed in as: <span id="accountEmail">(not signed in)</span></p>
+                    <p class="muted">Manage your wishlist on a separate page. Login is required to save favorites.</p>
+                </div>
+
+                <hr style="margin:18px 0; border:none; border-top:1px solid #f0f0f0;">
+
+                <div id="orders">
+                    <h3 class="section-title">Orders</h3>
+                    <p class="muted">Order history is not connected in this static prototype.</p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        const emailEl = document.getElementById('accountEmail');
+        const logoutLink = document.getElementById('logoutLink');
+        const currentUser = localStorage.getItem('cfLoggedInUser') || 'guest';
+
+        emailEl.textContent = currentUser === 'guest' ? '(not signed in)' : currentUser;
+
+        logoutLink.addEventListener('click', function () {
+            localStorage.removeItem('cfLoggedInUser');
+        });
+    </script>
+</body>
+</html>

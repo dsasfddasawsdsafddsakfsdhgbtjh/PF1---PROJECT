@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop | Charlotte Folk</title>
+    <link rel="icon" type="image/png" href="https://cdn.shopify.com/s/files/1/0527/5805/3051/files/cf_logoo_5d0317aa-f546-437b-9f7d-655c0c2769c0.png?crop=center&height=32&v=1723628464&width=32">
+    <style>
+        * { box-sizing: border-box; }
+        body { margin:0; min-height:100vh; color:#151515; background:#fff; font-family: "Roboto Condensed", Arial, sans-serif; }
+        a { color: inherit; text-decoration: none; }
+        
+        .site-header { display:flex; align-items:center; justify-content:space-between; gap:24px; min-height:74px; padding:18px clamp(18px,4vw,48px); border-bottom:1px solid #e2e2e2; }
+        .logo { font-family: Helvetica, Arial, sans-serif; font-size:18px; font-weight:700; text-transform:uppercase; }
+        .nav-links { display:flex; align-items:center; gap:22px; font-size:13px; text-transform:uppercase; }
+
+        .shop-page { max-width: 1200px; margin: 0 auto; padding: 40px 18px; }
+        .shop-title { font-size: 32px; font-weight: 700; text-transform: uppercase; margin: 0 0 24px; }
+        .shop-info { color: #666; margin-bottom: 32px; font-size: 14px; }
+
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; }
+        
+        .product-card { 
+            border: 1px solid #e2e2e2; 
+            overflow: hidden; 
+            transition: box-shadow 0.2s ease;
+        }
+        
+        .product-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        
+        .product-image { 
+            width: 100%; 
+            height: 320px; 
+            background: #f7f7f7; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-size: 14px; 
+            color: #999;
+        }
+        
+        .product-info { padding: 16px; }
+        .product-title { margin: 0 0 8px; font-size: 16px; font-weight: 700; text-transform: uppercase; }
+        .product-price { color: #666; font-size: 14px; margin-bottom: 12px; }
+        
+        .product-actions { display: flex; gap: 8px; }
+        .btn { 
+            flex: 1; 
+            min-height: 44px; 
+            border: 1px solid #151515; 
+            background: #151515; 
+            color: #fff; 
+            cursor: pointer; 
+            font-weight: 700; 
+            text-transform: uppercase; 
+            font-size: 12px;
+            font: inherit;
+        }
+        
+        .btn.wishlist-btn { 
+            background: transparent; 
+            color: #151515; 
+            flex: 0 1 auto;
+            width: 120px;
+        }
+        
+        .btn:hover { opacity: 0.85; }
+
+        @media (max-width: 900px) {
+            .products-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
+            .product-image { height: 240px; }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <a class="logo" href="index.html">Charlotte Folk</a>
+        <nav class="nav-links" aria-label="Main navigation">
+            <a href="index.html">Home</a>
+            <a href="shop-list.html">Shop</a>
+            <a href="search.html">Search</a>
+            <a href="wishlist.html">Wishlist</a>
+            <a href="account.html">Account</a>
+        </nav>
+    </header>
+
+    <main class="shop-page">
+        <h1 class="shop-title">Featured Products</h1>
+        <p class="shop-info">Click the heart icon to add items to your wishlist. You must be logged in to save favorites.</p>
+
+        <div class="products-grid" id="productsGrid"></div>
+    </main>
+
+    <script src="wishlist.js"></script>
+    <script>
+        // Sample product data
+        const products = [
+            { id: 'ny-leather-jacket', title: 'NY Leather Jacket', price: '₱2,500' },
+            { id: 'ny-varsity-jacket', title: 'NY Varsity Jacket', price: '₱1,800' },
+            { id: 'cf-originals-tee-black', title: 'CF Originals Tee', price: '₱650' },
+            { id: 'cf-quilted-poof-pouch', title: 'Quilted Poof Pouch', price: '₱1,200' },
+            { id: 'cf-slides-pre-order', title: 'CF Slides (Pre-Order)', price: '₱950' },
+            { id: 'cf-tumblr', title: 'CF Tumblr Tee', price: '₱700' },
+            { id: 'cf2018-hoodie', title: 'CF 2018 Hoodie', price: '₱1,500' },
+            { id: 'cf2018-tee', title: 'CF 2018 Tee', price: '₱650' },
+            { id: 'cfss22-tee-onyx', title: 'CF SS22 Tee Onyx', price: '₱750' },
+            { id: 'cfxxi-sweater', title: 'CF XXI Sweater', price: '₱2,200' },
+            { id: 'cfxxi-tee', title: 'CF XXI Tee', price: '₱700' },
+            { id: 'gift-card', title: 'Charlotte Folk Gift Card', price: 'From ₱500' }
+        ];
+
+        const gridEl = document.getElementById('productsGrid');
+
+        products.forEach(product => {
+            const card = document.createElement('div');
+            card.className = 'product-card';
+            
+            // Make the card clickable
+            card.style.cursor = 'pointer';
+            card.addEventListener('click', function(e) {
+                // Don't navigate if clicking on action buttons
+                if (e.target.classList.contains('btn')) return;
+                window.location.href = `product.html?id=${product.id}`;
+            });
+
+            const image = document.createElement('div');
+            image.className = 'product-image';
+            image.textContent = `[Product Image]`;
+
+            const info = document.createElement('div');
+            info.className = 'product-info';
+
+            const title = document.createElement('h2');
+            title.className = 'product-title';
+            title.textContent = product.title;
+
+            const price = document.createElement('p');
+            price.className = 'product-price';
+            price.textContent = product.price;
+
+            const actions = document.createElement('div');
+            actions.className = 'product-actions';
+
+            const addBtn = document.createElement('button');
+            addBtn.className = 'btn';
+            addBtn.textContent = 'Add to Cart';
+            addBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                // Redirect to product page for more options
+                window.location.href = `product.html?id=${product.id}`;
+            });
+
+            const wishBtn = WishlistUtil.createButton(product.id, product.title, `product.html?id=${product.id}`);
+
+            actions.appendChild(addBtn);
+            actions.appendChild(wishBtn);
+
+            info.appendChild(title);
+            info.appendChild(price);
+            info.appendChild(actions);
+
+            card.appendChild(image);
+            card.appendChild(info);
+            gridEl.appendChild(card);
+        });
+    </script>
+</body>
+</html>

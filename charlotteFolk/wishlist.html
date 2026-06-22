@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wishlist | Charlotte Folk</title>
+    <link rel="icon" type="image/png" href="https://cdn.shopify.com/s/files/1/0527/5805/3051/files/cf_logoo_5d0317aa-f546-437b-9f7d-655c0c2769c0.png?crop=center&height=32&v=1723628464&width=32">
+    <style>
+        * { box-sizing: border-box; }
+        body { margin:0; min-height:100vh; color:#151515; background:#fff; font-family:"Roboto Condensed", Arial, sans-serif; }
+        a { color: inherit; text-decoration: none; }
+        .site-header { display:flex; align-items:center; justify-content:space-between; gap:24px; min-height:74px; padding:18px clamp(18px,4vw,48px); border-bottom:1px solid #e2e2e2; }
+        .logo { font-family: Helvetica, Arial, sans-serif; font-size:18px; font-weight:700; text-transform:uppercase; }
+        .nav-links { display:flex; align-items:center; gap:22px; font-size:13px; text-transform:uppercase; }
+        .wishlist-shell { width:min(1120px,calc(100% - 36px)); margin:0 auto; padding:42px 0 64px; }
+        .wishlist-header { display:flex; align-items:end; justify-content:space-between; gap:20px; margin-bottom:28px; border-bottom:1px solid #e2e2e2; padding-bottom:18px; }
+        .section-title { margin:0; font-size:clamp(30px,5vw,46px); line-height:1; letter-spacing:0; text-transform:uppercase; }
+        .muted { color:#666; font-size:14px; }
+        .wishlist-info { display:grid; gap:16px; margin-bottom:28px; }
+        .wishlist-controls { display:grid; gap:12px; margin-bottom:20px; }
+        .wishlist-controls input { width:100%; min-height:44px; padding:10px; border:1px solid #dedede; }
+        .wishlist-controls button,
+        .btn { min-height:44px; border:1px solid #151515; background:#151515; color:#fff; cursor:pointer; font-weight:700; text-transform:uppercase; padding:0 18px; }
+        .btn.ghost { background:transparent; color:#151515; border-color:#151515; }
+        .wishlist-list { list-style:none; margin:0; padding:0; display:grid; gap:12px; }
+        .wishlist-item { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:12px; align-items:center; border:1px solid #f0f0f0; padding:14px; }
+        .wishlist-item__title { font-weight:700; }
+        .wishlist-item__actions button { border:0; background:transparent; text-transform:uppercase; text-decoration:underline; cursor:pointer; color:#151515; font-weight:700; }
+        .login-prompt { border:1px solid #f0f0f0; padding:24px; text-align:center; }
+        .login-prompt a { text-decoration:underline; }
+        .hidden { display:none !important; }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <a class="logo" href="index.html">Charlotte Folk</a>
+        <nav class="nav-links" aria-label="Main navigation">
+            <a href="index.html">Home</a>
+            <a href="shop-list.html">Shop</a>
+            <a href="search.html">Search</a>
+            <a href="wishlist.html">Wishlist</a>
+            <a href="account.html">Account</a>
+        </nav>
+    </header>
+
+    <main class="wishlist-shell">
+        <div class="wishlist-header">
+            <div>
+                <h1 class="section-title">My Wishlist</h1>
+                <p class="muted">Only logged-in users can add and view wishlist items.</p>
+            </div>
+            <a class="continue-link" href="shop-list.html">Continue shopping</a>
+        </div>
+
+        <div id="loggedOut" class="login-prompt hidden">
+            <p class="muted">Please log in to view and manage your wishlist.</p>
+            <a href="login.html">Log in</a>
+        </div>
+
+        <div id="wishlistSection" class="wishlist-info hidden">
+            <div class="wishlist-controls">
+                <input type="text" id="wishTitle" placeholder="Item title or name">
+                <input type="text" id="wishUrl" placeholder="Item URL (optional)">
+                <button id="addWish">Add to wishlist</button>
+            </div>
+            <ul class="wishlist-list" id="wishlistList" aria-live="polite"></ul>
+            <button id="clearWishlist" class="btn ghost">Clear wishlist</button>
+        </div>
+    </main>
+
+    <script src="wishlist.js"></script>
+    <script>
+        const loggedOut = document.getElementById('loggedOut');
+        const wishlistSection = document.getElementById('wishlistSection');
+        const wishlistList = document.getElementById('wishlistList');
+        const addWishBtn = document.getElementById('addWish');
+        const wishTitle = document.getElementById('wishTitle');
+        const wishUrl = document.getElementById('wishUrl');
+        const clearBtn = document.getElementById('clearWishlist');
+
+        const currentUser = WishlistUtil.getCurrentUser();
+        if (currentUser === 'guest') {
+            loggedOut.classList.remove('hidden');
+            wishlistSection.classList.add('hidden');
+        } else {
+            loggedOut.classList.add('hidden');
+            wishlistSection.classList.remove('hidden');
+            renderWishlist();
+        }
+
+        function renderWishlist() {
+            const items = WishlistUtil.load();
+            wishlistList.innerHTML = '';
+            if (!items.length) {
+                const li = document.createElement('li');
+                li.className = 'muted';
+                li.textContent = 'Your wishlist is empty.';
+                wishlistList.appendChild(li);
+                return;
+            }
+
+            items.forEach(item => {
+                const li = document.createElement('li');
+                li.className = 'wishlist-item';
+
+                const left = document.createElement('div');
+                const title = document.createElement('div');
+                title.className = 'wishlist-item__title';
+                if (item.url) {
+                    const a = document.createElement('a');
+                    a.href = item.url;
+                    a.textContent = item.title || item.url;
+                    a.target = '_blank';
+                    title.appendChild(a);
+                } else {
+                    title.textContent = item.title;
+                }
+                left.appendChild(title);
+
+                const actions = document.createElement('div');
+                actions.className = 'wishlist-item__actions';
+                const removeBtn = document.createElement('button');
+                removeBtn.textContent = 'Remove';
+                removeBtn.addEventListener('click', () => {
+                    WishlistUtil.remove(item.id);
+                    renderWishlist();
+                });
+                actions.appendChild(removeBtn);
+
+                li.appendChild(left);
+                li.appendChild(actions);
+                wishlistList.appendChild(li);
+            });
+        }
+
+        addWishBtn.addEventListener('click', () => {
+            const title = wishTitle.value.trim();
+            const url = wishUrl.value.trim();
+            if (!title && !url) return;
+            WishlistUtil.add(Date.now(), title || url, url);
+            wishTitle.value = '';
+            wishUrl.value = '';
+            renderWishlist();
+        });
+
+        clearBtn.addEventListener('click', () => {
+            if (!confirm('Clear all wishlist items?')) return;
+            WishlistUtil.clear();
+            renderWishlist();
+        });
+    </script>
+</body>
+</html>
